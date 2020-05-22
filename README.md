@@ -19,3 +19,8 @@
 
 ### 项目图片
 ![描述](https://gitee.com/walkerr/electron_rust/raw/master/src/assets/demo.jpg)
+
+
+### 特殊注意
+
+sudo chown -R 1002:1002 "～/.npm"
