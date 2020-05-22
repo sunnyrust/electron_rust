@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>我是窗口标题</title>
+  <link rel="stylesheet" href="./lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/all.css">
+</head>
+
+<body>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="#">Library</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Data</li>
+    </ol>
+  </nav>
+
+  <ol>
+    <li>
+      <div class="mb">
+        <a type="button" class="btn btn-info text-white" id="open_win">打开新窗口</a>
+        <a type="button" class="btn btn-primary text-white" id="aHref" href="https://jspang.com">在浏览器中打开</a>
+        <a type="button" class="btn btn-info text-white" id="goSonBtn">父子窗口通讯</a>
+        <a type="button" class="btn btn-primary text-white" id="notifyBtn">发送通知消息</a>
+        <div id="mytext"></div>
+      </div>
+
+    </li>
+    <li>
+      <div class="mb">
+        激活码: <span id="code">sfeasfjfannbarirj3424hlk4534l32e2hl324342krfkr</span>
+        <a type="button" class="btn btn-warning" id="code_btn">复制激活码</a>
+      </div>
+    </li>
+
+    <li>
+      <div class="mb">
+        <a type="button" class="btn btn-primary text-white" id="openFile">打开图片</a>
+        <a type="button" class="btn btn-warning" id="saveFile">保存文件</a>
+        <a type="button" class="btn btn-info text-white" id="messageClick">弹出对话框</a>
+        <a type="button" class="btn btn-primary text-white" id="rust_lib">Node调用Rust</a>
+        <a type="button" class="btn btn-warning text-white" id="read_file">读本地文件</a>
+        <div>
+          <img id="images" style="width: 20%; margin-top: 1rem;" />
+        </div>
+        <div id="rust_json"></div>
+      </div>
+    </li>
+  </ol>
+
+  <!-- 引入js文件 -->
+  <script src="./js/header.js"></script>
+  <script src="./js/right_click.js"></script>
+  <script src="./js/copy.js"></script>
+  <script src="./js/open_win.js"></script>
+  <script src="./js/open_file.js"></script>
+  <script src="./js/son_win.js"></script>
+  <script src="./js/net.js"></script>
+  <script src="./js/notification.js"></script>
+  <script src="./js/file_read.js"></script>
+  <!-- node调用rust -->
+  <script src="./lib/ffi.js"></script>
+  <script src="./js/rust_lib.js"></script>
+
+</body>
+
+</html>
