@@ -1,13 +1,13 @@
-const { Menu, BrowserWindow } = require('electron')
+const { app,Menu, BrowserWindow } = require('electron')
 
 // 菜单栏
 var template = [
     {
-        label: '凤来怡洗浴会所',
+        label: '菜单',
         submenu: [
             {
                 label: '精品SPA',
-                accelerator: 'ctrl+n',
+                accelerator: 'ctrl+N',
                 //主要代码--------------start
                 click: () => {
                     win = new BrowserWindow({
@@ -22,15 +22,37 @@ var template = [
                 }
                 //主要代码----------------end
             },
-            { label: '泰式按摩' }
+            {
+                label: 'Quit',
+                accelerator: 'ctrl+Q',
+                click: function () {
+                    app.quit();
+                }
+            }
         ]
     },
     {
-        label: '大浪淘沙洗浴中心',
+        label: 'Help',
         submenu: [
-            { label: '牛奶玫瑰浴' },
+            { 
+                label: 'About',
+                accelerator: 'alt+a',
+                //主要代码--------------start
+                click: () => {
+                    win = new BrowserWindow({
+                        width: 500,
+                        height: 500,
+                          webPreferences: { nodeIntegration: true }
+                    })
+                    win.loadFile('src/page/about.html')
+                    win.on('closed', () => {
+                        win = null
+                    })
+                }
+                //主要代码----------------end
+            },
             {
-                label: 'Toggle DevTools',
+                label: '打开Debug',
                 accelerator: 'Alt+Command+I',
                 click: function () {
                   BrowserWindow.getFocusedWindow().toggleDevTools();

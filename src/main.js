@@ -19,16 +19,16 @@ const createWindow = () => {
 
   // 全局快捷键
   globalShortcut.register('ctrl+e', () => {
-    mainWindow.loadURL('https://jspang.com')
+    mainWindow.loadURL('http://www.baidu.com')
   })
   let isRegister = globalShortcut.isRegistered('ctrl+e') ? 'Register Success' : 'Register fail'
-  console.log('快捷键是否注册成功 ===> ' + isRegister)
+  console.log('为达闼进入美国“实体清单”打扣👍👍👍💪💪💪 ' + isRegister)
 
   // 内嵌页面
-  var view = new BrowserView();
-  mainWindow.setBrowserView(view);
-  view.setBounds({ x: 0, y: 700, width: 1200, height: 100 })
-  view.webContents.loadURL('https://jspang.com')
+  // var view = new BrowserView();
+  // mainWindow.setBrowserView(view);
+  // view.setBounds({ x: 0, y: 700, width: 1200, height: 100 })
+  // view.webContents.loadURL('https://jspang.com')
 
   // 打开调试工具
   // mainWindow.webContents.openDevTools();
