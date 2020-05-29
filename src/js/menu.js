@@ -6,8 +6,8 @@ var template = [
         label: '菜单',
         submenu: [
             {
-                label: '精品SPA',
-                accelerator: 'ctrl+N',
+                label: '清除汇智缓存',
+                accelerator: 'alt+C',
                 //主要代码--------------start
                 click: () => {
                     win = new BrowserWindow({
@@ -15,7 +15,7 @@ var template = [
                         height: 500,
                         webPreferences: { nodeIntegration: true }
                     })
-                    win.loadFile('src/page/yellow.html')
+                    win.loadFile('src/page/clearHZ.html')
                     win.on('closed', () => {
                         win = null
                     })

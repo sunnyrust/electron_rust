@@ -15,7 +15,7 @@ const createWindow = () => {
   require('./js/menu.js')
 
   // 主入口文件
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadFile(path.join(__dirname, 'main.html'));
 
   // 全局快捷键
   globalShortcut.register('ctrl+e', () => {

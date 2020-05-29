@@ -4,7 +4,7 @@ window.onload = function () {
     readFile.onclick = function () {
         var _path = path.join(__dirname, '', 'assets/xiaojiejie.txt');
         fs.readFile(_path, (err, data) => {
-            fileContent.innerHTML = data
+           fileContent.innerHTML = data;
         })
     }
 } 

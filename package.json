@@ -1,6 +1,6 @@
 {
-  "name": "new-app",
-  "productName": "new-app",
+  "name": "cross-tools",
+  "productName": "cross-tools",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/main.js",
@@ -10,8 +10,8 @@
   },
   "keywords": [],
   "author": {
-    "name": "iwalkerr",
-    "email": "walkerr@163.com"
+    "name": "Sunny",
+    "email": "Sunnyregion@github.com"
   },
   "license": "MIT",
   "dependencies": {

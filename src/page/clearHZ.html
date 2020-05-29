@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../lib/js/juicer-min.js"></script>
+    <title>Clear Memcache</title>
+</head>
+
+<body>
+    <div id="clearURL"></div>
+    <hr />
+    <div>2020-05-25</div>
+</body>
+<script  type="text/javascript">
+    const path = require('path');
+    const fs = require('fs');
+    window.onload = function () {
+            // var readFile = this.document.querySelector('#read_file')
+            var fileContent = this.document.querySelector('#clearURL')
+            // readFile.onclick = function () {
+                var _path = path.join(__dirname, '', 'data/clearURL.html');
+                fs.readFile(_path, (err, data) => {
+                    fileContent.innerHTML = data;
+                })
+            }
+        // } 
+</script>
+</html>

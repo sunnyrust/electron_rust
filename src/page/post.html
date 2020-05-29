@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../lib/js/juicer-min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <title>Post</title>
+</head>
+
+<body>
+    <!-- <form name="form" id="form" action="http://10.11.35.104:9111/logininterface/ilogin" method="POST"> -->
+        <form name="form" id="form" onsubmit="return false;">
+       <input type="text" id="username" name="username" value="admin" />
+        <br />
+        <input type="text" id="pwd" name="pwd" value="123456" />
+        <br />
+        <input type="submit" value="提交" />
+    </form>
+    <script type="text/javascript">
+    $('form').submit(function () {
+            var username = $('#username').val();
+            var pwd = $('#pwd').val();
+            $.ajax({
+                type: 'POST',
+                url: 'http://10.11.35.104:9111/logininterface/ilogin',
+                dataType: 'json',
+                data: JSON.stringify( { username:username,pwd:pwd}),
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log(data);
+                },
+                error:function(data){
+                    console.log(data);
+                }
+                
+            });
+        });
+    </script>
+</body>
+
+</html>
