@@ -11,3 +11,18 @@ rustLib.onclick = function () {
     let mytext = document.querySelector('#rust_json')
     mytext.innerHTML = JSON.stringify(test_str)
 }
+
+var postmanLib = document.querySelector('#postman_lib');
+postmanLib.onclick = function () {
+    newWin = new remote.BrowserWindow({
+        width: 1000,
+        height: 500,
+    })
+    newWin.loadFile('src/page/data/post.html')
+    newWin.on('close', () => {
+        newWin = null;
+    })
+}
+
+
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.3.4.css">
+    <link href="../../css/jquery.json-viewer.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../../lib/js/juicer-min.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.json-viewer.js"></script>
+    <title>Post</title>
+</head>
+
+<body>
+    <form name="jsonform" id="jsonform" onsubmit="return false;">
+       <label>URL:</label> <input type="text" id="url" style="width:300px" name="url" value="http://10.11.35.104:9111/logininterface/ilogin" />
+        <br />
+        <label>Param:</label><br />
+        <textarea name="param" id="param" cols="50" rows="5">{"username":"admin","pwd":"123456"}</textarea>
+        <input type="submit" value="提交" />
+    </form>
+    <!-- <div id="json_data"></div> -->
+    <pre id="json-renderer"></pre>
+     
+    <script type="text/javascript">
+
+        $('#jsonform').submit(function () {
+            var url = $('#url').val();
+            var param = $('#param').val();
+            $.ajax({
+                type: 'POST',
+                url: url,
+                dataType: 'json',
+                data: param,
+                contentType: 'application/json',
+                success: function (data) {
+                    // let jsonData = document.querySelector('#json_data')
+                    json_data= JSON.stringify(data.data);
+                    // jsonData.innerHTML =json_data;
+                    try {
+                        var input = eval('(' + json_data + ')');
+                    }
+                    catch (error) {
+                        return alert("Cannot eval JSON: " + error);
+                    }
+                    var options = {
+                        collapsed: $('#collapsed').is(':checked'),
+                        withQuotes: $('#with-quotes').is(':checked')
+                    };
+                    $('#json-renderer').jsonViewer(input, options);
+                    // console.info(data);                  
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+                
+            });
+        });
+    </script>
+</body>
+
+</html>

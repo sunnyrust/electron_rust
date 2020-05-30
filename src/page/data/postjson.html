@@ -1,0 +1,33 @@
+<form name="formJSON" id="form1" onsubmit="return false;">
+    <label>URL:</label> <input type="text" id="url" style="width:300px" name="url" value="http://10.11.35.104:9111/logininterface/ilogin" />
+     <br />
+     <label>Param:</label><br />
+     <textarea name="param" id="param" cols="50" rows="10">{"username":"admin","pwd":"123456"}</textarea>
+     <br />
+     <input type="submit" id="jsonsubmit" value="提交" />
+ </form>
+ <script>
+ var jsonSubmit = document.querySelector('#jsonsubmit');
+ jsonSubmit.onclick = function () {
+     alert("ok");
+     console.info("==========");
+    var url= $('#url').val();
+    var param= $('#param').val();
+    console.info(JSON.stringify(param));
+    $.ajax({
+        type: 'POST',
+        url: url,
+        dataType: 'json',
+        data:param ,
+        contentType: 'application/json',
+        success: function (data) {
+            var fileContent = document.querySelector('#rust_json')
+            cfileContent.innerHTML = data;
+        },
+        error:function(data){
+            console.log(data);
+        }
+        
+    });
+ }
+</script>
