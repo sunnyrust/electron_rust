@@ -13,9 +13,9 @@
 </head>
 
 <body>
+    <label>URL:</label> <input type="text" id="url" style="width:300px" name="url" value="http://10.11.35.104:9111/logininterface/ilogin" />
+    <br />
     <form name="jsonform" id="jsonform" onsubmit="return false;">
-       <label>URL:</label> <input type="text" id="url" style="width:300px" name="url" value="http://10.11.35.104:9111/logininterface/ilogin" />
-        <br />
         <label>Param:</label><br />
         <textarea name="param" id="param" cols="50" rows="5">{"username":"admin","pwd":"123456"}</textarea>
         <input type="submit" value="提交" />
@@ -24,16 +24,16 @@
     <pre id="json-renderer"></pre>
      
     <script type="text/javascript">
-
         $('#jsonform').submit(function () {
             var url = $('#url').val();
             var param = $('#param').val();
+            //var parma=$('#jsonform').serialize();
             $.ajax({
                 type: 'POST',
                 url: url,
-                dataType: 'json',
+                //dataType: 'json',
                 data: param,
-                contentType: 'application/json',
+                //contentType: 'application/json',
                 success: function (data) {
                     // let jsonData = document.querySelector('#json_data')
                     json_data= JSON.stringify(data.data);
