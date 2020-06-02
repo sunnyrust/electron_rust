@@ -2,62 +2,198 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.3.4.css">
-    <link href="../../css/jquery.json-viewer.css" type="text/css" rel="stylesheet" />
-    <script type="text/javascript" src="../../lib/js/juicer-min.js"></script>
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/jquery.json-viewer.js"></script>
-    <title>Post</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.3.4.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/css/jquery-ui.min.css">
+  <link rel="stylesheet" type="text/css" href="../../css/sunny.css">
+  <link href="../../css/jquery.json-viewer.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../../lib/js/juicer-min.js"></script>
+
+  <script src="../../js/jquery.min.js"></script>
+  <script type="text/javascript" src="../../lib/js/jquery-ui.min.js"></script>
+  <script src="../../js/jquery.json-viewer.js"></script>
+  <title>Post</title>
 </head>
 
 <body>
-    <label>URL:</label> <input type="text" id="url" style="width:300px" name="url" value="http://10.11.35.104:9111/logininterface/ilogin" />
-    <br />
-    <form name="jsonform" id="jsonform" onsubmit="return false;">
-        <label>Param:</label><br />
-        <textarea name="param" id="param" cols="50" rows="5">{"username":"admin","pwd":"123456"}</textarea>
+  <div style="width:100%;height:50px;line-height:50px;position:fixed;top:0;left:0;font-size: 24px;padding-left: 30px;">接口调用</div>
+  <div id="wrap">
+    <div id="sidebar" style="height:1024px;">
+      <ul id="menu"></ul>
+    </div>
+    <div id="content" style="height:1340px;">
+      <label>URL:</label> <input type="text" id="url" style="width:300px" name="url" value="http://10.11.35.104:9111/employee/iexportbytenantcode" />
+      <br /><label>IsForm:</label><input type="checkbox" id="check_form" value="是否form" /><br />
+      <img src="../images/cube.gif" alt="waiting" id="loading" />
+      <form name="jsonform" id="jsonform" onsubmit="return false;">
+        <label>Param:<font color="red">此处KV结构的key必须有"",比如:{"key":"value"}</font></label><br />
+        <textarea name="param" id="param" cols="200" rows="5">{"tenantcode": "cloudminds",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTEwMTczMzcsImp0aSI6IjIiLCJpc3MiOiJmcmFzIiwibmJmIjoxNTkwOTc0MTM3LCJzdWIiOiJjbG91ZG1pbmRzIn0.JL1eBX4Urhp18-pr5gYAEfLpIDjxvPn9ELPw4zdr2bo"}</textarea>
         <input type="submit" value="提交" />
-    </form>
-    <!-- <div id="json_data"></div> -->
-    <pre id="json-renderer"></pre>
-     
-    <script type="text/javascript">
-        $('#jsonform').submit(function () {
-            var url = $('#url').val();
-            var param = $('#param').val();
-            //var parma=$('#jsonform').serialize();
-            $.ajax({
-                type: 'POST',
-                url: url,
-                //dataType: 'json',
-                data: param,
-                //contentType: 'application/json',
-                success: function (data) {
-                    // let jsonData = document.querySelector('#json_data')
-                    json_data= JSON.stringify(data.data);
-                    // jsonData.innerHTML =json_data;
-                    try {
-                        var input = eval('(' + json_data + ')');
-                    }
-                    catch (error) {
-                        return alert("Cannot eval JSON: " + error);
-                    }
-                    var options = {
-                        collapsed: $('#collapsed').is(':checked'),
-                        withQuotes: $('#with-quotes').is(':checked')
-                    };
-                    $('#json-renderer').jsonViewer(input, options);
-                    // console.info(data);                  
-                },
-                error: function (data) {
-                    console.log(data);
-                }
-                
-            });
-        });
-    </script>
+      </form>
+      <!-- <div id="json_data"></div> -->
+      <pre id="json-renderer"></pre>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $('#jsonform').submit(function() {
+      var url = $('#url').val();
+      var param = $('#param').val();
+      var bForm = $('#check_form').is(':checked');
+      if (bForm) {
+        console.info(bForm);
+        param = jQuery.param(JSON.parse(param))
+      }
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: param,
+        beforeSend: function() {
+          $("#loading").show();
+        },
+        success: function(data) {
+          json_data = JSON.stringify(data.data);
+          try {
+            var input = eval('(' + json_data + ')');
+          } catch (error) {
+            return alert("Cannot eval JSON: " + error);
+          }
+          var options = {
+            collapsed: $('#collapsed').is(':checked'),
+            withQuotes: $('#with-quotes').is(':checked')
+          };
+          $('#json-renderer').jsonViewer(input, options);
+          bBingo = data.data;
+        },
+        complete: function() {
+          $("#loading").hide();
+        },
+        error: function(data) {
+          console.log(data);
+          alert('看看IsForm选择是不是正确，或者参数错误。');
+        }
+
+      });
+    });
+
+    //menu  http://jsfiddle.net/9uhc3/5/
+
+    $(function() {
+
+      var data = {
+        menu: [{
+          name: 'Croatia',
+          link: '0',
+          id: "",
+          sub: null
+        }, {
+          name: '图片相关 ',
+          link: '1',
+          sub: [{
+            name: '登录',
+            link: 'pic_login',
+            sub: null
+          }, {
+            name: '取得图片列表',
+            link: 'pic_getlist',
+            sub: null
+          }, {
+            name: '一键搞定',
+            link: 'pic_bingo',
+            sub: null
+          }]
+        }, {
+          name: 'Spain',
+          link: '2',
+          sub: [{
+            name: 'Barcelona',
+            link: '2-0',
+            id: "",
+            sub: null
+          }, {
+            name: 'Real Madrid',
+            link: '2-1',
+            id: "",
+            sub: null
+          }]
+        }, {
+          name: 'Germany',
+          link: '3',
+          id: "",
+          sub: [{
+            name: 'Bayern Munich',
+            link: '3-1',
+            id: "",
+            sub: null
+          }, {
+            name: 'Borrusia Dortmund',
+            link: '3-2',
+            id: "",
+            sub: null
+          }]
+        }]
+      };
+      var getMenuItem = function(itemData) {
+        var item = $("<li>")
+          .append(
+            $("<a>", {
+              href: 'javascript:doAClick("' + itemData.link + '");',
+              html: itemData.name
+            }));
+        if (itemData.sub) {
+          var subList = $("<ul>");
+          $.each(itemData.sub, function() {
+            subList.append(getMenuItem(this));
+          });
+          item.append(subList);
+        }
+        return item;
+      };
+
+      var $menu = $("#menu");
+      $.each(data.menu, function() {
+        $menu.append(
+          getMenuItem(this)
+        );
+      });
+      $menu.menu();
+    });
+    var bBingo = "";
+
+    function SecondStep() {
+      $("#loading").show();
+
+      $('#url').val('http://10.11.35.104:9111/employee/iexportbytenantcode');
+      $('#param').val(`{"tenantcode": "` + bBingo.user.TenantCode + `", "token": "` + bBingo.token + `"}`);
+      $('#check_form').prop('checked', true);
+      $('#jsonform').submit();
+    }
+
+    function doAClick(param) {
+      switch (param) {
+        case 'pic_login':
+          $('#url').val('http://10.11.35.104:9111/logininterface/ilogin');
+          $('#param').val(`{"username":"admin","pwd":"123456"}`);
+          $('#check_form').prop('checked', false);
+          break;
+        case `pic_getlist`:
+          $('#url').val('http://10.11.35.104:9111/employee/iexportbytenantcode');
+          $('#param').val(
+            `{"tenantcode": "cloudminds", "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTEwMTczMzcsImp0aSI6IjIiLCJpc3MiOiJmcmFzIiwibmJmIjoxNTkwOTc0MTM3LCJzdWIiOiJjbG91ZG1pbmRzIn0.JL1eBX4Urhp18-pr5gYAEfLpIDjxvPn9ELPw4zdr2bo"}`);
+          $('#check_form').prop('checked', true);
+          break;
+        case `pic_bingo`:
+          $("#loading").show();
+          $('#url').val('http://10.11.35.104:9111/logininterface/ilogin');
+          $('#param').val(`{"username":"admin","pwd":"123456"}`);
+          $('#check_form').prop('checked', false);
+          $('#jsonform').submit();
+          setTimeout("SecondStep()", 1000);
+          break;
+      }
+    }
+  </script>
 </body>
 
 </html>

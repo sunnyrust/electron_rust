@@ -1,0 +1,47 @@
+/* Sunny used CSS */
+.ui-menu {
+    width: 160px;
+    font-size: 18px;
+}
+#loading {
+width:320px;
+height:235px;
+border:3px solid #C3DAF9;
+position:absolute;
+top:150px;
+left:300px;
+z-index:10000;
+background-color:#F7F9FC;
+line-height:25px;
+vertical-align:middle;
+font-size:11pt;
+display:none;
+}
+body{
+    margin:0;
+    padding:0;
+}
+    #wrap {
+        overflow: hidden; *zoom: 1;
+    }
+    #content ,#sidebar {
+        #eee;
+    }
+    #sidebar {
+        float: left; width: 300px;
+        /* background-color:#4876FF; */
+        position:fixed;
+        top:50px;
+        left:0;
+    }
+    #content {
+        margin-left: 310px;
+        height:1000px;
+        background-color:white;
+        margin-top:50px;
+    }
+    #footer {
+        background-color: #f00;
+        color:#fff;
+        margin-top: 1em;
+    }
