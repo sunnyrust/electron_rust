@@ -23,7 +23,7 @@
       <ul id="menu"></ul>
     </div>
     <div id="content" style="height:1340px;">
-      <label>URL:</label> <input type="text" id="url" style="width:300px" name="url" value="http://10.11.35.104:9111/employee/iexportbytenantcode" />
+      <label>URL:</label> <input type="text" id="url" style="width:300px" name="url" value="http://172.16.13.135:30338/employee/iexportbytenantcode" />
       <br /><label>IsForm:</label><input type="checkbox" id="check_form" value="是否form" /><br />
       <img src="../images/cube.gif" alt="waiting" id="loading" />
       <form name="jsonform" id="jsonform" onsubmit="return false;">
@@ -42,7 +42,6 @@
       var param = $('#param').val();
       var bForm = $('#check_form').is(':checked');
       if (bForm) {
-        console.info(bForm);
         param = jQuery.param(JSON.parse(param))
       }
       $.ajax({
@@ -53,7 +52,13 @@
           $("#loading").show();
         },
         success: function(data) {
-          json_data = JSON.stringify(data.data);
+          
+          if (data.data==undefined){
+            json_data = JSON.stringify(data.Response);
+          }else{
+            json_data = JSON.stringify(data.data);
+          }
+          console.info(json_data);
           try {
             var input = eval('(' + json_data + ')');
           } catch (error) {
@@ -104,12 +109,11 @@
             sub: null
           }]
         }, {
-          name: 'Spain',
+          name: '汇智相关',
           link: '2',
           sub: [{
-            name: 'Barcelona',
-            link: '2-0',
-            id: "",
+            name: '登录',
+            link: 'hz_checkon',
             sub: null
           }, {
             name: 'Real Madrid',
@@ -164,7 +168,7 @@
     function SecondStep() {
       $("#loading").show();
 
-      $('#url').val('http://10.11.35.104:9111/employee/iexportbytenantcode');
+      $('#url').val('http://172.16.13.135:30338/employee/iexportbytenantcode');
       $('#param').val(`{"tenantcode": "` + bBingo.user.TenantCode + `", "token": "` + bBingo.token + `"}`);
       $('#check_form').prop('checked', true);
       $('#jsonform').submit();
@@ -173,23 +177,29 @@
     function doAClick(param) {
       switch (param) {
         case 'pic_login':
-          $('#url').val('http://10.11.35.104:9111/logininterface/ilogin');
-          $('#param').val(`{"username":"admin","pwd":"123456"}`);
+          $('#url').val('http://172.16.13.135:30338/logininterface/ilogin');
+          $('#param').val(`{"username":"Cloud-ETM","pwd":"Cloud-ETM"}`);
           $('#check_form').prop('checked', false);
           break;
         case `pic_getlist`:
-          $('#url').val('http://10.11.35.104:9111/employee/iexportbytenantcode');
+          $('#url').val('http://172.16.13.135:30338/employee/iexportbytenantcode');
           $('#param').val(
-            `{"tenantcode": "cloudminds", "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTEwMTczMzcsImp0aSI6IjIiLCJpc3MiOiJmcmFzIiwibmJmIjoxNTkwOTc0MTM3LCJzdWIiOiJjbG91ZG1pbmRzIn0.JL1eBX4Urhp18-pr5gYAEfLpIDjxvPn9ELPw4zdr2bo"}`);
+            `{"tenantcode": "cloudminds", "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTM2ODU0MTMsImp0aSI6IjIiLCJpc3MiOiJmcmFzIiwibmJmIjoxNjEzNjQyMjEzLCJzdWIiOiJjbG91ZG1pbmRzIn0.ndSxWkH52aRAtRGfB75jLivUT98T_ji-nwO6eP6UfhQ"}`);
           $('#check_form').prop('checked', true);
           break;
         case `pic_bingo`:
           $("#loading").show();
-          $('#url').val('http://10.11.35.104:9111/logininterface/ilogin');
-          $('#param').val(`{"username":"admin","pwd":"123456"}`);
+          $('#url').val('http://172.16.13.135:30338/logininterface/ilogin');
+          $('#param').val(`{"username":"Cloud-ETM","pwd":"Cloud-ETM"}`);
           $('#check_form').prop('checked', false);
           $('#jsonform').submit();
           setTimeout("SecondStep()", 1000);
+          break;
+        case `hz_checkon`:
+          $('#url').val('http://airport-cust.hucii.com/api/app/robot/checkon');
+          $('#param').val(`{"RobotNo":"105005"}`);
+          $('#check_form').prop('checked', true);
+          $('#jsonform').submit();
           break;
       }
     }
